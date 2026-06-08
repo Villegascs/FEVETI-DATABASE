@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Athlete {
+  id             String   @id @default(cuid())
+  cedula         String   @unique
+  fullName       String
+  birthDate      String
+  modalities     String   // Comma separated or JSON string
+  association    String
+  club           String?
+  joinDate       String?  // Fecha de ingreso a FEVETI
+  expiryDate     String?  // Fecha de vencimiento del carnet
+  isActive       Boolean  @default(true)
+  photoUrl       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
