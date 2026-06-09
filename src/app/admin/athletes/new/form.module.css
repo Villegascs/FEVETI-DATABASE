@@ -201,3 +201,24 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+@media (max-width: 640px) {
+  .formCard {
+    padding: 1.25rem;
+  }
+  
+  .photoUploadContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .formActions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .saveButton, .deleteButton {
+    width: 100%;
+    justify-content: center;
+  }
+}

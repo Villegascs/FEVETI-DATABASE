@@ -126,3 +126,10 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+@media (max-width: 480px) {
+  .loginBox {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
+}

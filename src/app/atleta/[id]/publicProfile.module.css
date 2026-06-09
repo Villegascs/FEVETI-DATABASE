@@ -180,3 +180,9 @@
   font-weight: 500;
   margin: 0;
 }
+
+@media (max-width: 480px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,12 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import styles from './admin.module.css';
-import { Users, FileDown, LogOut, LayoutDashboard, Target } from 'lucide-react';
+import { Users, FileDown, LogOut, LayoutDashboard, Menu, X } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -15,24 +18,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.refresh();
   };
 
+  const closeSidebar = () => setIsSidebarOpen(false);
+
   return (
     <div className={styles.adminContainer}>
-      <aside className={styles.sidebar}>
+      {/* Mobile overlay */}
+      {isSidebarOpen && (
+        <div className={styles.sidebarOverlay} onClick={closeSidebar}></div>
+      )}
+
+      <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sidebarHeader}>
           <img src="/logo-feveti.png" alt="Logo FEVETI" className={styles.logoIcon} style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
           <h2>FEVETI Admin</h2>
+          <button className={styles.closeSidebarBtn} onClick={closeSidebar}>
+            <X size={24} />
+          </button>
         </div>
         
         <nav className={styles.nav}>
-          <Link href="/admin" className={`${styles.navLink} ${pathname === '/admin' ? styles.active : ''}`}>
+          <Link href="/admin" onClick={closeSidebar} className={`${styles.navLink} ${pathname === '/admin' ? styles.active : ''}`}>
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
           </Link>
-          <Link href="/admin/athletes" className={`${styles.navLink} ${pathname.startsWith('/admin/athletes') ? styles.active : ''}`}>
+          <Link href="/admin/athletes" onClick={closeSidebar} className={`${styles.navLink} ${pathname.startsWith('/admin/athletes') ? styles.active : ''}`}>
             <Users size={20} />
             <span>Atletas</span>
           </Link>
-          <Link href="/admin/export" className={`${styles.navLink} ${pathname === '/admin/export' ? styles.active : ''}`}>
+          <Link href="/admin/export" onClick={closeSidebar} className={`${styles.navLink} ${pathname === '/admin/export' ? styles.active : ''}`}>
             <FileDown size={20} />
             <span>Exportar Data</span>
           </Link>
@@ -48,7 +61,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <main className={styles.mainContent}>
         <header className={styles.topbar}>
-          <h1>Sistema de Gestión de Atletas</h1>
+          <div className={styles.topbarLeft}>
+            <button className={styles.mobileMenuBtn} onClick={() => setIsSidebarOpen(true)}>
+              <Menu size={24} />
+            </button>
+            <h1>Sistema de Gestión de Atletas</h1>
+          </div>
         </header>
         <div className={styles.contentWrapper}>
           {children}
