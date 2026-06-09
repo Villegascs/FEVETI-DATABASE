@@ -52,6 +52,9 @@ export function DatePicker({ value, onChange, placeholder = 'Seleccionar fecha',
               onSelect={handleSelect}
               locale={es}
               showOutsideDays
+              captionLayout="dropdown"
+              startMonth={new Date(1940, 0)}
+              endMonth={new Date(2050, 11)}
             />
           </div>
         </Popover.Content>
