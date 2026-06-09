@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../../new/form.module.css';
 import { ArrowLeft, Save, Trash2 } from 'lucide-react';
+import { DatePicker } from '@/components/ui/DatePicker';
 
 export default function EditAthletePage() {
   const router = useRouter();
@@ -196,13 +197,10 @@ export default function EditAthletePage() {
 
             <div className={styles.inputGroup}>
               <label htmlFor="birthDate">Fecha de Nacimiento</label>
-              <input
+              <DatePicker
                 id="birthDate"
-                name="birthDate"
-                type="date"
-                required
                 value={formData.birthDate}
-                onChange={handleChange}
+                onChange={(value) => setFormData({ ...formData, birthDate: value })}
               />
             </div>
 
@@ -246,23 +244,19 @@ export default function EditAthletePage() {
 
             <div className={styles.inputGroup}>
               <label htmlFor="joinDate">Fecha de Ingreso a FEVETI</label>
-              <input
+              <DatePicker
                 id="joinDate"
-                name="joinDate"
-                type="date"
                 value={formData.joinDate}
-                onChange={handleChange}
+                onChange={(value) => setFormData({ ...formData, joinDate: value })}
               />
             </div>
 
             <div className={styles.inputGroup}>
               <label htmlFor="expiryDate">Fecha de Vencimiento del Carnet</label>
-              <input
+              <DatePicker
                 id="expiryDate"
-                name="expiryDate"
-                type="date"
                 value={formData.expiryDate}
-                onChange={handleChange}
+                onChange={(value) => setFormData({ ...formData, expiryDate: value })}
               />
             </div>
 
